@@ -1344,6 +1344,23 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mVolBtnMusicControls = (Settings.System.getIntForUser(resolver,
                     Settings.System.VOLBTN_MUSIC_CONTROLS, 1, UserHandle.USER_CURRENT) == 1);
 
+            //Its now further down cause of 31942: Make system layout fill the window properly on expanded desktop mode
+            /*
+            int  mNavButtonsHeight = Settings.System.getInt(resolver,
+            Settings.System.NAV_BUTTONS_HEIGHT, 48);
+            mNavigationBarHeightForRotation[mPortraitRotation] =
+            mNavigationBarHeightForRotation[mUpsideDownRotation] =
+                    mNavButtonsHeight * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
+            mNavigationBarHeightForRotation[mLandscapeRotation] =
+            mNavigationBarHeightForRotation[mSeascapeRotation] =
+                    mNavButtonsHeight * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
+            mNavigationBarWidthForRotation[mPortraitRotation] =
+            mNavigationBarWidthForRotation[mUpsideDownRotation] =
+            mNavigationBarWidthForRotation[mLandscapeRotation] =
+            mNavigationBarWidthForRotation[mSeascapeRotation] =
+                (mNavButtonsHeight - 6) * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
+            */
+
             boolean keyRebindingEnabled = Settings.System.getInt(resolver,
                     Settings.System.HARDWARE_KEY_REBINDING, 0) == 1;
 
@@ -1452,6 +1469,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // Update navigation bar dimensions
             boolean desktopExpanded = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.EXPANDED_DESKTOP_STATE, 0) == 1;
+
+            int  mNavButtonsHeight = Settings.System.getInt(resolver,
+                    Settings.System.NAV_BUTTONS_HEIGHT, 48);
+
             if (desktopExpanded) {
                 // Set the navigation bar's dimensions to 0 in expanded desktop mode
                 mNavigationBarWidthForRotation[mPortraitRotation]
@@ -1466,20 +1487,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // Height of the navigation bar when presented horizontally at bottom
                 mNavigationBarHeightForRotation[mPortraitRotation] =
                 mNavigationBarHeightForRotation[mUpsideDownRotation] =
-                        mContext.getResources().getDimensionPixelSize(
-                                com.android.internal.R.dimen.navigation_bar_height);
+                //      mContext.getResources().getDimensionPixelSize(
+                //              com.android.internal.R.dimen.navigation_bar_height);
+                        mNavButtonsHeight * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
+  
                 mNavigationBarHeightForRotation[mLandscapeRotation] =
                 mNavigationBarHeightForRotation[mSeascapeRotation] =
-                        mContext.getResources().getDimensionPixelSize(
-                                com.android.internal.R.dimen.navigation_bar_height_landscape);
+                //      mContext.getResources().getDimensionPixelSize(
+                //              com.android.internal.R.dimen.navigation_bar_height_landscape);
+                        mNavButtonsHeight * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
 
                 // Width of the navigation bar when presented vertically along one side
                 mNavigationBarWidthForRotation[mPortraitRotation] =
                 mNavigationBarWidthForRotation[mUpsideDownRotation] =
                 mNavigationBarWidthForRotation[mLandscapeRotation] =
                 mNavigationBarWidthForRotation[mSeascapeRotation] =
-                        mContext.getResources().getDimensionPixelSize(
-                                com.android.internal.R.dimen.navigation_bar_width);
+                //      mContext.getResources().getDimensionPixelSize(
+                //              com.android.internal.R.dimen.navigation_bar_width);
+                        (mNavButtonsHeight - 6) * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
             }
         }
 
