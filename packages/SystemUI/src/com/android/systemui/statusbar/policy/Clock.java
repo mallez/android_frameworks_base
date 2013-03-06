@@ -175,6 +175,7 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
     };
 
     final void updateClock() {
+        mCalendar = Calendar.getInstance(TimeZone.getTimeZone(tz));
         mCalendar.setTimeInMillis(System.currentTimeMillis());
         setText(getSmallTime());
     }
@@ -262,16 +263,20 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
 
         int amPmStyle = (Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_AM_PM, 2));
-        mClockStyle = Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_CLOCK, STYLE_CLOCK_RIGHT);
 
         if (mAmPmStyle != amPmStyle) {
             mAmPmStyle = amPmStyle;
             mClockFormatString = "";
+
+            if (mAttached) {
+                updateClock();
+	    }
         }
 
+        mClockStyle = Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_CLOCK, STYLE_CLOCK_RIGHT);
+
         updateClockVisibility();
-        updateClock();
     }
 
     protected void updateClockVisibility() {
