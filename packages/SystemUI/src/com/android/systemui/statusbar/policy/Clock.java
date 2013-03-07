@@ -43,6 +43,7 @@ import com.android.internal.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -50,11 +51,12 @@ import java.util.TimeZone;
  * Digital clock for the status bar.
  */
 public class Clock extends TextView implements OnClickListener, OnLongClickListener {
-    private boolean mAttached;
-    private Calendar mCalendar;
-    private String mClockFormatString;
-    private SimpleDateFormat mClockFormat;
-    private Locale mLocale;
+    protected boolean mAttached;
+    protected Calendar mCalendar;
+    protected String mClockFormatString;
+    protected SimpleDateFormat mClockFormat;
+    protected Locale mLocale;
+    protected String mClockDateFormat = "EEE";
 
     private static final int AM_PM_STYLE_NORMAL  = 0;
     private static final int AM_PM_STYLE_SMALL   = 1;
@@ -85,6 +87,9 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
                     Settings.System.STATUS_BAR_AM_PM), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK), false, this);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_FORMAT), false,
+                    this);
             updateSettings();
         }
 
@@ -231,13 +236,27 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
         } else {
             sdf = mClockFormat;
         }
+
+        CharSequence dateString = null;
+
         String result = sdf.format(mCalendar.getTime());
+
+        Date now = new Date();
+
+        dateString = DateFormat.format(mClockDateFormat, now) + " ";
+ 
+        result = dateString.toString() + result;
+
+        SpannableStringBuilder formatted = new SpannableStringBuilder(result);
+        if (mAmPmStyle == AM_PM_STYLE_NORMAL) {
+                return formatted;
+        }
 
         if (mAmPmStyle != AM_PM_STYLE_NORMAL) {
             int magic1 = result.indexOf(MAGIC1);
             int magic2 = result.indexOf(MAGIC2);
             if (magic1 >= 0 && magic2 > magic1) {
-                SpannableStringBuilder formatted = new SpannableStringBuilder(result);
+                formatted = new SpannableStringBuilder(result);
                 if (mAmPmStyle == AM_PM_STYLE_GONE) {
                     formatted.delete(magic1, magic2+1);
                 } else {
@@ -269,6 +288,15 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
 
             if (mAttached) {
                 updateClock();
+	    }
+        }
+
+        String clockDateFormat = Settings.System.getString(getContext().getContentResolver(),
+                    Settings.System.STATUSBAR_CLOCK_DATE_FORMAT);
+        if (!mClockDateFormat.equals(clockDateFormat)) {
+            mClockDateFormat = clockDateFormat;
+	    if (mAttached) {
+	        updateClock();
 	    }
         }
 
