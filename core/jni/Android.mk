@@ -25,6 +25,8 @@ endif
 
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 
+LOCAL_CFLAGS += -fno-strict-aliasing
+
 LOCAL_SRC_FILES:= \
 	AndroidRuntime.cpp \
 	Time.cpp \

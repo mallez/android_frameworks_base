@@ -58,6 +58,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_C_INCLUDES := \
 	external/zlib
 
+LOCAL_CPPFLAGS := -fno-strict-aliasing
 include $(BUILD_HOST_STATIC_LIBRARY)
 
 
@@ -85,6 +86,7 @@ LOCAL_C_INCLUDES := \
     external/skia/include/core \
     external/icu4c/common \
 	external/zlib
+LOCAL_CPPFLAGS := -fno-strict-aliasing
 
 LOCAL_MODULE:= libandroidfw
 
@@ -103,8 +105,11 @@ LOCAL_C_INCLUDES += \
 LOCAL_LDLIBS := -lrt -ldl -lpthread
 LOCAL_MODULE := libandroidfw
 LOCAL_SRC_FILES := $(commonUtilsSources) BackupData.cpp BackupHelpers.cpp
+LOCAL_CPPFLAGS := -fno-strict-aliasing
 include $(BUILD_STATIC_LIBRARY)
 endif
+
+LOCAL_CPPFLAGS := -fno-strict-aliasing
 
 
 # Include subdirectory makefiles
