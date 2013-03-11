@@ -54,6 +54,7 @@ LOCAL_C_INCLUDES += \
 	$(call include-path-for, audio-effects)
 
 LOCAL_CFLAGS += -fvisibility=hidden
+LOCAL_CFLAGS += -fno-strict-aliasing
 
 
 
