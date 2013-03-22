@@ -293,7 +293,7 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
 
         String clockDateFormat = Settings.System.getString(getContext().getContentResolver(),
                     Settings.System.STATUSBAR_CLOCK_DATE_FORMAT);
-        if (!mClockDateFormat.equals(clockDateFormat)) {
+        if (!mClockDateFormat.equals(clockDateFormat) && (clockDateFormat != null)) {
             mClockDateFormat = clockDateFormat;
 	    if (mAttached) {
 	        updateClock();

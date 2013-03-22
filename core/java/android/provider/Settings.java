@@ -1,18 +1,18 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright (C) 2006 The Android Open Source Project
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 package android.provider;
 
@@ -59,1198 +59,1242 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * The Settings provider contains global system-level device preferences.
- */
+* The Settings provider contains global system-level device preferences.
+*/
 public final class Settings {
 
-    // Intent actions for Settings
+// Intent actions for Settings
 
-    /**
-     * Activity Action: Show system settings.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_SETTINGS = "android.settings.SETTINGS";
+/**
+* Activity Action: Show system settings.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_SETTINGS = "android.settings.SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of APNs.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_APN_SETTINGS = "android.settings.APN_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of APNs.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_APN_SETTINGS = "android.settings.APN_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of current location
-     * sources.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_LOCATION_SOURCE_SETTINGS =
-            "android.settings.LOCATION_SOURCE_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of current location
+* sources.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_LOCATION_SOURCE_SETTINGS =
+    "android.settings.LOCATION_SOURCE_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of wireless controls
-     * such as Wi-Fi, Bluetooth and Mobile networks.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_WIRELESS_SETTINGS =
-            "android.settings.WIRELESS_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of wireless controls
+* such as Wi-Fi, Bluetooth and Mobile networks.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_WIRELESS_SETTINGS =
+    "android.settings.WIRELESS_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow entering/exiting airplane mode.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_AIRPLANE_MODE_SETTINGS =
-            "android.settings.AIRPLANE_MODE_SETTINGS";
+/**
+* Activity Action: Show settings to allow entering/exiting airplane mode.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_AIRPLANE_MODE_SETTINGS =
+    "android.settings.AIRPLANE_MODE_SETTINGS";
 
-    /**
-     * Activity Action: Show settings for accessibility modules.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_ACCESSIBILITY_SETTINGS =
-            "android.settings.ACCESSIBILITY_SETTINGS";
+/**
+* Activity Action: Show settings for accessibility modules.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_ACCESSIBILITY_SETTINGS =
+    "android.settings.ACCESSIBILITY_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of security and
-     * location privacy.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_SECURITY_SETTINGS =
-            "android.settings.SECURITY_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of security and
+* location privacy.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_SECURITY_SETTINGS =
+    "android.settings.SECURITY_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of privacy options.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_PRIVACY_SETTINGS =
-            "android.settings.PRIVACY_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of privacy options.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_PRIVACY_SETTINGS =
+    "android.settings.PRIVACY_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of Wi-Fi.
+/**
+* Activity Action: Show settings to allow configuration of Wi-Fi.
 
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
 
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_WIFI_SETTINGS =
-            "android.settings.WIFI_SETTINGS";
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_WIFI_SETTINGS =
+    "android.settings.WIFI_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of a static IP
-     * address for Wi-Fi.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you safeguard
-     * against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_WIFI_IP_SETTINGS =
-            "android.settings.WIFI_IP_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of a static IP
+* address for Wi-Fi.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you safeguard
+* against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_WIFI_IP_SETTINGS =
+    "android.settings.WIFI_IP_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of Bluetooth.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_BLUETOOTH_SETTINGS =
-            "android.settings.BLUETOOTH_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of Bluetooth.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_BLUETOOTH_SETTINGS =
+    "android.settings.BLUETOOTH_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of Wifi Displays.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     * @hide
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_WIFI_DISPLAY_SETTINGS =
-            "android.settings.WIFI_DISPLAY_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of Wifi Displays.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+* @hide
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_WIFI_DISPLAY_SETTINGS =
+    "android.settings.WIFI_DISPLAY_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of date and time.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_DATE_SETTINGS =
-            "android.settings.DATE_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of date and time.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_DATE_SETTINGS =
+    "android.settings.DATE_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of sound and volume.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_SOUND_SETTINGS =
-            "android.settings.SOUND_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of sound and volume.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_SOUND_SETTINGS =
+    "android.settings.SOUND_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of display.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_DISPLAY_SETTINGS =
-            "android.settings.DISPLAY_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of display.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_DISPLAY_SETTINGS =
+    "android.settings.DISPLAY_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of locale.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_LOCALE_SETTINGS =
-            "android.settings.LOCALE_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of locale.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_LOCALE_SETTINGS =
+    "android.settings.LOCALE_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to configure input methods, in particular
-     * allowing the user to enable input methods.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_INPUT_METHOD_SETTINGS =
-            "android.settings.INPUT_METHOD_SETTINGS";
+/**
+* Activity Action: Show settings to configure input methods, in particular
+* allowing the user to enable input methods.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_INPUT_METHOD_SETTINGS =
+    "android.settings.INPUT_METHOD_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to enable/disable input method subtypes.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * To tell which input method's subtypes are displayed in the settings, add
-     * {@link #EXTRA_INPUT_METHOD_ID} extra to this Intent with the input method id.
-     * If there is no extra in this Intent, subtypes from all installed input methods
-     * will be displayed in the settings.
-     *
-     * @see android.view.inputmethod.InputMethodInfo#getId
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_INPUT_METHOD_SUBTYPE_SETTINGS =
-            "android.settings.INPUT_METHOD_SUBTYPE_SETTINGS";
+/**
+* Activity Action: Show settings to enable/disable input method subtypes.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* To tell which input method's subtypes are displayed in the settings, add
+* {@link #EXTRA_INPUT_METHOD_ID} extra to this Intent with the input method id.
+* If there is no extra in this Intent, subtypes from all installed input methods
+* will be displayed in the settings.
+*
+* @see android.view.inputmethod.InputMethodInfo#getId
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_INPUT_METHOD_SUBTYPE_SETTINGS =
+    "android.settings.INPUT_METHOD_SUBTYPE_SETTINGS";
 
-    /**
-     * Activity Action: Show a dialog to select input method.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     * @hide
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_SHOW_INPUT_METHOD_PICKER =
-            "android.settings.SHOW_INPUT_METHOD_PICKER";
+/**
+* Activity Action: Show a dialog to select input method.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+* @hide
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_SHOW_INPUT_METHOD_PICKER =
+    "android.settings.SHOW_INPUT_METHOD_PICKER";
 
-    /**
-     * Activity Action: Show settings to manage the user input dictionary.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_USER_DICTIONARY_SETTINGS =
-            "android.settings.USER_DICTIONARY_SETTINGS";
+/**
+* Activity Action: Show settings to manage the user input dictionary.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_USER_DICTIONARY_SETTINGS =
+    "android.settings.USER_DICTIONARY_SETTINGS";
 
-    /**
-     * Activity Action: Adds a word to the user dictionary.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: An extra with key <code>word</code> that contains the word
-     * that should be added to the dictionary.
-     * <p>
-     * Output: Nothing.
-     *
-     * @hide
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_USER_DICTIONARY_INSERT =
-            "com.android.settings.USER_DICTIONARY_INSERT";
+/**
+* Activity Action: Adds a word to the user dictionary.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: An extra with key <code>word</code> that contains the word
+* that should be added to the dictionary.
+* <p>
+* Output: Nothing.
+*
+* @hide
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_USER_DICTIONARY_INSERT =
+    "com.android.settings.USER_DICTIONARY_INSERT";
 
-    /**
-     * Activity Action: Show settings to allow configuration of application-related settings.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_APPLICATION_SETTINGS =
-            "android.settings.APPLICATION_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of application-related settings.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_APPLICATION_SETTINGS =
+    "android.settings.APPLICATION_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of application
-     * development-related settings.  As of
-     * {@link android.os.Build.VERSION_CODES#JELLY_BEAN_MR1} this action is
-     * a required part of the platform.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_APPLICATION_DEVELOPMENT_SETTINGS =
-            "android.settings.APPLICATION_DEVELOPMENT_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of application
+* development-related settings.  As of
+* {@link android.os.Build.VERSION_CODES#JELLY_BEAN_MR1} this action is
+* a required part of the platform.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_APPLICATION_DEVELOPMENT_SETTINGS =
+    "android.settings.APPLICATION_DEVELOPMENT_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of quick launch shortcuts.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_QUICK_LAUNCH_SETTINGS =
-            "android.settings.QUICK_LAUNCH_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of quick launch shortcuts.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_QUICK_LAUNCH_SETTINGS =
+    "android.settings.QUICK_LAUNCH_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to manage installed applications.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_MANAGE_APPLICATIONS_SETTINGS =
-            "android.settings.MANAGE_APPLICATIONS_SETTINGS";
+/**
+* Activity Action: Show settings to manage installed applications.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_MANAGE_APPLICATIONS_SETTINGS =
+    "android.settings.MANAGE_APPLICATIONS_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to manage all applications.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS =
-            "android.settings.MANAGE_ALL_APPLICATIONS_SETTINGS";
+/**
+* Activity Action: Show settings to manage all applications.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS =
+    "android.settings.MANAGE_ALL_APPLICATIONS_SETTINGS";
 
-    /**
-     * Activity Action: Show screen of details about a particular application.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: The Intent's data URI specifies the application package name
-     * to be shown, with the "package" scheme.  That is "package:com.my.app".
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_APPLICATION_DETAILS_SETTINGS =
-            "android.settings.APPLICATION_DETAILS_SETTINGS";
+/**
+* Activity Action: Show screen of details about a particular application.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: The Intent's data URI specifies the application package name
+* to be shown, with the "package" scheme.  That is "package:com.my.app".
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_APPLICATION_DETAILS_SETTINGS =
+    "android.settings.APPLICATION_DETAILS_SETTINGS";
 
-    /**
-     * Activity Action: Show settings for system update functionality.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     *
-     * @hide
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_SYSTEM_UPDATE_SETTINGS =
-            "android.settings.SYSTEM_UPDATE_SETTINGS";
+/**
+* Activity Action: Show settings for system update functionality.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*
+* @hide
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_SYSTEM_UPDATE_SETTINGS =
+    "android.settings.SYSTEM_UPDATE_SETTINGS";
 
-    /**
-     * Activity Action: Show settings to allow configuration of sync settings.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * The account types available to add via the add account button may be restricted by adding an
-     * {@link #EXTRA_AUTHORITIES} extra to this Intent with one or more syncable content provider's
-     * authorities. Only account types which can sync with that content provider will be offered to
-     * the user.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_SYNC_SETTINGS =
-            "android.settings.SYNC_SETTINGS";
+/**
+* Activity Action: Show settings to allow configuration of sync settings.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* The account types available to add via the add account button may be restricted by adding an
+* {@link #EXTRA_AUTHORITIES} extra to this Intent with one or more syncable content provider's
+* authorities. Only account types which can sync with that content provider will be offered to
+* the user.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_SYNC_SETTINGS =
+    "android.settings.SYNC_SETTINGS";
 
-    /**
-     * Activity Action: Show add account screen for creating a new account.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * The account types available to add may be restricted by adding an {@link #EXTRA_AUTHORITIES}
-     * extra to the Intent with one or more syncable content provider's authorities.  Only account
-     * types which can sync with that content provider will be offered to the user.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_ADD_ACCOUNT =
-            "android.settings.ADD_ACCOUNT_SETTINGS";
+/**
+* Activity Action: Show add account screen for creating a new account.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* The account types available to add may be restricted by adding an {@link #EXTRA_AUTHORITIES}
+* extra to the Intent with one or more syncable content provider's authorities.  Only account
+* types which can sync with that content provider will be offered to the user.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_ADD_ACCOUNT =
+    "android.settings.ADD_ACCOUNT_SETTINGS";
 
-    /**
-     * Activity Action: Show settings for selecting the network operator.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_NETWORK_OPERATOR_SETTINGS =
-            "android.settings.NETWORK_OPERATOR_SETTINGS";
+/**
+* Activity Action: Show settings for selecting the network operator.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_NETWORK_OPERATOR_SETTINGS =
+    "android.settings.NETWORK_OPERATOR_SETTINGS";
 
-    /**
-     * Activity Action: Show settings for selection of 2G/3G.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_DATA_ROAMING_SETTINGS =
-            "android.settings.DATA_ROAMING_SETTINGS";
+/**
+* Activity Action: Show settings for selection of 2G/3G.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_DATA_ROAMING_SETTINGS =
+    "android.settings.DATA_ROAMING_SETTINGS";
 
-    /**
-     * Activity Action: Show settings for internal storage.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_INTERNAL_STORAGE_SETTINGS =
-            "android.settings.INTERNAL_STORAGE_SETTINGS";
-    /**
-     * Activity Action: Show settings for memory card storage.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_MEMORY_CARD_SETTINGS =
-            "android.settings.MEMORY_CARD_SETTINGS";
+/**
+* Activity Action: Show settings for internal storage.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_INTERNAL_STORAGE_SETTINGS =
+    "android.settings.INTERNAL_STORAGE_SETTINGS";
+/**
+* Activity Action: Show settings for memory card storage.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_MEMORY_CARD_SETTINGS =
+    "android.settings.MEMORY_CARD_SETTINGS";
 
-    /**
-     * Activity Action: Show settings for global search.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_SEARCH_SETTINGS =
-        "android.search.action.SEARCH_SETTINGS";
+/**
+* Activity Action: Show settings for global search.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_SEARCH_SETTINGS =
+"android.search.action.SEARCH_SETTINGS";
 
-    /**
-     * Activity Action: Show general device information settings (serial
-     * number, software version, phone number, etc.).
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_DEVICE_INFO_SETTINGS =
-        "android.settings.DEVICE_INFO_SETTINGS";
+/**
+* Activity Action: Show general device information settings (serial
+* number, software version, phone number, etc.).
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_DEVICE_INFO_SETTINGS =
+"android.settings.DEVICE_INFO_SETTINGS";
 
-    /**
-     * Activity Action: Show NFC settings.
-     * <p>
-     * This shows UI that allows NFC to be turned on or off.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing
-     * @see android.nfc.NfcAdapter#isEnabled()
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_NFC_SETTINGS = "android.settings.NFC_SETTINGS";
+/**
+* Activity Action: Show NFC settings.
+* <p>
+* This shows UI that allows NFC to be turned on or off.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing
+* @see android.nfc.NfcAdapter#isEnabled()
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_NFC_SETTINGS = "android.settings.NFC_SETTINGS";
 
-    /**
-     * Activity Action: Show NFC Sharing settings.
-     * <p>
-     * This shows UI that allows NDEF Push (Android Beam) to be turned on or
-     * off.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing
-     * @see android.nfc.NfcAdapter#isNdefPushEnabled()
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_NFCSHARING_SETTINGS =
-        "android.settings.NFCSHARING_SETTINGS";
+/**
+* Activity Action: Show NFC Sharing settings.
+* <p>
+* This shows UI that allows NDEF Push (Android Beam) to be turned on or
+* off.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing
+* @see android.nfc.NfcAdapter#isNdefPushEnabled()
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_NFCSHARING_SETTINGS =
+"android.settings.NFCSHARING_SETTINGS";
 
-    /**
-     * Activity Action: Show Daydream settings.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing.
-     * @see android.service.dreams.DreamService
-     * @hide
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_DREAM_SETTINGS = "android.settings.DREAM_SETTINGS";
+/**
+* Activity Action: Show Daydream settings.
+* <p>
+* In some cases, a matching Activity may not exist, so ensure you
+* safeguard against this.
+* <p>
+* Input: Nothing.
+* <p>
+* Output: Nothing.
+* @see android.service.dreams.DreamService
+* @hide
+*/
+@SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+public static final String ACTION_DREAM_SETTINGS = "android.settings.DREAM_SETTINGS";
 
-    // End of Intent actions for Settings
+// End of Intent actions for Settings
 
-    /**
-     * @hide - Private call() method on SettingsProvider to read from 'system' table.
-     */
-    public static final String CALL_METHOD_GET_SYSTEM = "GET_system";
+/**
+* @hide - Private call() method on SettingsProvider to read from 'system' table.
+*/
+public static final String CALL_METHOD_GET_SYSTEM = "GET_system";
 
-    /**
-     * @hide - Private call() method on SettingsProvider to read from 'secure' table.
-     */
-    public static final String CALL_METHOD_GET_SECURE = "GET_secure";
+/**
+* @hide - Private call() method on SettingsProvider to read from 'secure' table.
+*/
+public static final String CALL_METHOD_GET_SECURE = "GET_secure";
 
-    /**
-     * @hide - Private call() method on SettingsProvider to read from 'global' table.
-     */
-    public static final String CALL_METHOD_GET_GLOBAL = "GET_global";
+/**
+* @hide - Private call() method on SettingsProvider to read from 'global' table.
+*/
+public static final String CALL_METHOD_GET_GLOBAL = "GET_global";
 
-    /**
-     * @hide - User handle argument extra to the fast-path call()-based requests
-     */
-    public static final String CALL_METHOD_USER_KEY = "_user";
+/**
+* @hide - User handle argument extra to the fast-path call()-based requests
+*/
+public static final String CALL_METHOD_USER_KEY = "_user";
 
-    /** @hide - Private call() method to write to 'system' table */
-    public static final String CALL_METHOD_PUT_SYSTEM = "PUT_system";
+/** @hide - Private call() method to write to 'system' table */
+public static final String CALL_METHOD_PUT_SYSTEM = "PUT_system";
 
-    /** @hide - Private call() method to write to 'secure' table */
-    public static final String CALL_METHOD_PUT_SECURE = "PUT_secure";
+/** @hide - Private call() method to write to 'secure' table */
+public static final String CALL_METHOD_PUT_SECURE = "PUT_secure";
 
-    /** @hide - Private call() method to write to 'global' table */
-    public static final String CALL_METHOD_PUT_GLOBAL= "PUT_global";
+/** @hide - Private call() method to write to 'global' table */
+public static final String CALL_METHOD_PUT_GLOBAL= "PUT_global";
 
-    /**
-     * Activity Extra: Limit available options in launched activity based on the given authority.
-     * <p>
-     * This can be passed as an extra field in an Activity Intent with one or more syncable content
-     * provider's authorities as a String[]. This field is used by some intents to alter the
-     * behavior of the called activity.
-     * <p>
-     * Example: The {@link #ACTION_ADD_ACCOUNT} intent restricts the account types available based
-     * on the authority given.
-     */
-    public static final String EXTRA_AUTHORITIES =
-            "authorities";
+/**
+* Activity Extra: Limit available options in launched activity based on the given authority.
+* <p>
+* This can be passed as an extra field in an Activity Intent with one or more syncable content
+* provider's authorities as a String[]. This field is used by some intents to alter the
+* behavior of the called activity.
+* <p>
+* Example: The {@link #ACTION_ADD_ACCOUNT} intent restricts the account types available based
+* on the authority given.
+*/
+public static final String EXTRA_AUTHORITIES =
+    "authorities";
 
-    public static final String EXTRA_INPUT_METHOD_ID = "input_method_id";
+public static final String EXTRA_INPUT_METHOD_ID = "input_method_id";
 
-    private static final String JID_RESOURCE_PREFIX = "android";
+private static final String JID_RESOURCE_PREFIX = "android";
 
-    public static final String AUTHORITY = "settings";
+public static final String AUTHORITY = "settings";
 
-    private static final String TAG = "Settings";
-    private static final boolean LOCAL_LOGV = false;
+private static final String TAG = "Settings";
+private static final boolean LOCAL_LOGV = false;
 
-    public static class SettingNotFoundException extends AndroidException {
-        public SettingNotFoundException(String msg) {
-            super(msg);
-        }
+public static class SettingNotFoundException extends AndroidException {
+public SettingNotFoundException(String msg) {
+    super(msg);
+}
+}
+
+/**
+* Common base for tables of name/value settings.
+*/
+public static class NameValueTable implements BaseColumns {
+public static final String NAME = "name";
+public static final String VALUE = "value";
+
+protected static boolean putString(ContentResolver resolver, Uri uri,
+	String name, String value) {
+    // The database will take care of replacing duplicates.
+    try {
+	ContentValues values = new ContentValues();
+	values.put(NAME, name);
+	values.put(VALUE, value);
+	resolver.insert(uri, values);
+	return true;
+    } catch (SQLException e) {
+	Log.w(TAG, "Can't set key " + name + " in " + uri, e);
+	return false;
+    }
+}
+
+public static Uri getUriFor(Uri uri, String name) {
+    return Uri.withAppendedPath(uri, name);
+}
+}
+
+// Thread-safe.
+private static class NameValueCache {
+private final String mVersionSystemProperty;
+private final Uri mUri;
+
+private static final String[] SELECT_VALUE =
+    new String[] { Settings.NameValueTable.VALUE };
+private static final String NAME_EQ_PLACEHOLDER = "name=?";
+
+// Must synchronize on 'this' to access mValues and mValuesVersion.
+private final HashMap<String, String> mValues = new HashMap<String, String>();
+private long mValuesVersion = 0;
+
+// Initially null; set lazily and held forever.  Synchronized on 'this'.
+private IContentProvider mContentProvider = null;
+
+// The method we'll call (or null, to not use) on the provider
+// for the fast path of retrieving settings.
+private final String mCallGetCommand;
+private final String mCallSetCommand;
+
+public NameValueCache(String versionSystemProperty, Uri uri,
+	String getCommand, String setCommand) {
+    mVersionSystemProperty = versionSystemProperty;
+    mUri = uri;
+    mCallGetCommand = getCommand;
+    mCallSetCommand = setCommand;
+}
+
+private IContentProvider lazyGetProvider(ContentResolver cr) {
+    IContentProvider cp = null;
+    synchronized (this) {
+	cp = mContentProvider;
+	if (cp == null) {
+	    cp = mContentProvider = cr.acquireProvider(mUri.getAuthority());
+	}
+    }
+    return cp;
+}
+
+public boolean putStringForUser(ContentResolver cr, String name, String value,
+	final int userHandle) {
+    try {
+	Bundle arg = new Bundle();
+	arg.putString(Settings.NameValueTable.VALUE, value);
+	arg.putInt(CALL_METHOD_USER_KEY, userHandle);
+	IContentProvider cp = lazyGetProvider(cr);
+	cp.call(mCallSetCommand, name, arg);
+    } catch (RemoteException e) {
+	Log.w(TAG, "Can't set key " + name + " in " + mUri, e);
+	return false;
+    }
+    return true;
+}
+
+public String getStringForUser(ContentResolver cr, String name, final int userHandle) {
+    final boolean isSelf = (userHandle == UserHandle.myUserId());
+    if (isSelf) {
+	long newValuesVersion = SystemProperties.getLong(mVersionSystemProperty, 0);
+
+	// Our own user's settings data uses a client-side cache
+	synchronized (this) {
+	    if (mValuesVersion != newValuesVersion) {
+		if (LOCAL_LOGV || false) {
+		    Log.v(TAG, "invalidate [" + mUri.getLastPathSegment() + "]: current "
+			    + newValuesVersion + " != cached " + mValuesVersion);
+		}
+
+		mValues.clear();
+		mValuesVersion = newValuesVersion;
+	    }
+
+	    if (mValues.containsKey(name)) {
+		return mValues.get(name);  // Could be null, that's OK -- negative caching
+	    }
+	}
+    } else {
+	if (LOCAL_LOGV) Log.v(TAG, "get setting for user " + userHandle
+		+ " by user " + UserHandle.myUserId() + " so skipping cache");
     }
 
-    /**
-     * Common base for tables of name/value settings.
-     */
-    public static class NameValueTable implements BaseColumns {
-        public static final String NAME = "name";
-        public static final String VALUE = "value";
+    IContentProvider cp = lazyGetProvider(cr);
 
-        protected static boolean putString(ContentResolver resolver, Uri uri,
-                String name, String value) {
-            // The database will take care of replacing duplicates.
-            try {
-                ContentValues values = new ContentValues();
-                values.put(NAME, name);
-                values.put(VALUE, value);
-                resolver.insert(uri, values);
-                return true;
-            } catch (SQLException e) {
-                Log.w(TAG, "Can't set key " + name + " in " + uri, e);
-                return false;
-            }
-        }
-
-        public static Uri getUriFor(Uri uri, String name) {
-            return Uri.withAppendedPath(uri, name);
-        }
+    // Try the fast path first, not using query().  If this
+    // fails (alternate Settings provider that doesn't support
+    // this interface?) then we fall back to the query/table
+    // interface.
+    if (mCallGetCommand != null) {
+	try {
+	    Bundle args = null;
+	    if (!isSelf) {
+		args = new Bundle();
+		args.putInt(CALL_METHOD_USER_KEY, userHandle);
+	    }
+	    Bundle b = cp.call(mCallGetCommand, name, args);
+	    if (b != null) {
+		String value = b.getPairValue();
+		// Don't update our cache for reads of other users' data
+		if (isSelf) {
+		    synchronized (this) {
+			mValues.put(name, value);
+		    }
+		} else {
+		    if (LOCAL_LOGV) Log.i(TAG, "call-query of user " + userHandle
+			    + " by " + UserHandle.myUserId()
+			    + " so not updating cache");
+		}
+		return value;
+	    }
+	    // If the response Bundle is null, we fall through
+	    // to the query interface below.
+	} catch (RemoteException e) {
+	    // Not supported by the remote side?  Fall through
+	    // to query().
+	}
     }
 
-    // Thread-safe.
-    private static class NameValueCache {
-        private final String mVersionSystemProperty;
-        private final Uri mUri;
+    Cursor c = null;
+    try {
+	c = cp.query(mUri, SELECT_VALUE, NAME_EQ_PLACEHOLDER,
+		     new String[]{name}, null, null);
+	if (c == null) {
+	    Log.w(TAG, "Can't get key " + name + " from " + mUri);
+	    return null;
+	}
 
-        private static final String[] SELECT_VALUE =
-            new String[] { Settings.NameValueTable.VALUE };
-        private static final String NAME_EQ_PLACEHOLDER = "name=?";
-
-        // Must synchronize on 'this' to access mValues and mValuesVersion.
-        private final HashMap<String, String> mValues = new HashMap<String, String>();
-        private long mValuesVersion = 0;
-
-        // Initially null; set lazily and held forever.  Synchronized on 'this'.
-        private IContentProvider mContentProvider = null;
-
-        // The method we'll call (or null, to not use) on the provider
-        // for the fast path of retrieving settings.
-        private final String mCallGetCommand;
-        private final String mCallSetCommand;
-
-        public NameValueCache(String versionSystemProperty, Uri uri,
-                String getCommand, String setCommand) {
-            mVersionSystemProperty = versionSystemProperty;
-            mUri = uri;
-            mCallGetCommand = getCommand;
-            mCallSetCommand = setCommand;
-        }
-
-        private IContentProvider lazyGetProvider(ContentResolver cr) {
-            IContentProvider cp = null;
-            synchronized (this) {
-                cp = mContentProvider;
-                if (cp == null) {
-                    cp = mContentProvider = cr.acquireProvider(mUri.getAuthority());
-                }
-            }
-            return cp;
-        }
-
-        public boolean putStringForUser(ContentResolver cr, String name, String value,
-                final int userHandle) {
-            try {
-                Bundle arg = new Bundle();
-                arg.putString(Settings.NameValueTable.VALUE, value);
-                arg.putInt(CALL_METHOD_USER_KEY, userHandle);
-                IContentProvider cp = lazyGetProvider(cr);
-                cp.call(mCallSetCommand, name, arg);
-            } catch (RemoteException e) {
-                Log.w(TAG, "Can't set key " + name + " in " + mUri, e);
-                return false;
-            }
-            return true;
-        }
-
-        public String getStringForUser(ContentResolver cr, String name, final int userHandle) {
-            final boolean isSelf = (userHandle == UserHandle.myUserId());
-            if (isSelf) {
-                long newValuesVersion = SystemProperties.getLong(mVersionSystemProperty, 0);
-
-                // Our own user's settings data uses a client-side cache
-                synchronized (this) {
-                    if (mValuesVersion != newValuesVersion) {
-                        if (LOCAL_LOGV || false) {
-                            Log.v(TAG, "invalidate [" + mUri.getLastPathSegment() + "]: current "
-                                    + newValuesVersion + " != cached " + mValuesVersion);
-                        }
-
-                        mValues.clear();
-                        mValuesVersion = newValuesVersion;
-                    }
-
-                    if (mValues.containsKey(name)) {
-                        return mValues.get(name);  // Could be null, that's OK -- negative caching
-                    }
-                }
-            } else {
-                if (LOCAL_LOGV) Log.v(TAG, "get setting for user " + userHandle
-                        + " by user " + UserHandle.myUserId() + " so skipping cache");
-            }
-
-            IContentProvider cp = lazyGetProvider(cr);
-
-            // Try the fast path first, not using query().  If this
-            // fails (alternate Settings provider that doesn't support
-            // this interface?) then we fall back to the query/table
-            // interface.
-            if (mCallGetCommand != null) {
-                try {
-                    Bundle args = null;
-                    if (!isSelf) {
-                        args = new Bundle();
-                        args.putInt(CALL_METHOD_USER_KEY, userHandle);
-                    }
-                    Bundle b = cp.call(mCallGetCommand, name, args);
-                    if (b != null) {
-                        String value = b.getPairValue();
-                        // Don't update our cache for reads of other users' data
-                        if (isSelf) {
-                            synchronized (this) {
-                                mValues.put(name, value);
-                            }
-                        } else {
-                            if (LOCAL_LOGV) Log.i(TAG, "call-query of user " + userHandle
-                                    + " by " + UserHandle.myUserId()
-                                    + " so not updating cache");
-                        }
-                        return value;
-                    }
-                    // If the response Bundle is null, we fall through
-                    // to the query interface below.
-                } catch (RemoteException e) {
-                    // Not supported by the remote side?  Fall through
-                    // to query().
-                }
-            }
-
-            Cursor c = null;
-            try {
-                c = cp.query(mUri, SELECT_VALUE, NAME_EQ_PLACEHOLDER,
-                             new String[]{name}, null, null);
-                if (c == null) {
-                    Log.w(TAG, "Can't get key " + name + " from " + mUri);
-                    return null;
-                }
-
-                String value = c.moveToNext() ? c.getString(0) : null;
-                synchronized (this) {
-                    mValues.put(name, value);
-                }
-                if (LOCAL_LOGV) {
-                    Log.v(TAG, "cache miss [" + mUri.getLastPathSegment() + "]: " +
-                            name + " = " + (value == null ? "(null)" : value));
-                }
-                return value;
-            } catch (RemoteException e) {
-                Log.w(TAG, "Can't get key " + name + " from " + mUri, e);
-                return null;  // Return null, but don't cache it.
-            } finally {
-                if (c != null) c.close();
-            }
-        }
+	String value = c.moveToNext() ? c.getString(0) : null;
+	synchronized (this) {
+	    mValues.put(name, value);
+	}
+	if (LOCAL_LOGV) {
+	    Log.v(TAG, "cache miss [" + mUri.getLastPathSegment() + "]: " +
+		    name + " = " + (value == null ? "(null)" : value));
+	}
+	return value;
+    } catch (RemoteException e) {
+	Log.w(TAG, "Can't get key " + name + " from " + mUri, e);
+	return null;  // Return null, but don't cache it.
+    } finally {
+	if (c != null) c.close();
     }
+}
+}
 
-    /**
-     * System settings, containing miscellaneous system preferences.  This
-     * table holds simple name/value pairs.  There are convenience
-     * functions for accessing individual settings entries.
-     */
-    public static final class System extends NameValueTable {
-        public static final String SYS_PROP_SETTING_VERSION = "sys.settings_system_version";
+/**
+* System settings, containing miscellaneous system preferences.  This
+* table holds simple name/value pairs.  There are convenience
+* functions for accessing individual settings entries.
+*/
+public static final class System extends NameValueTable {
+public static final String SYS_PROP_SETTING_VERSION = "sys.settings_system_version";
 
-        /**
-         * The content:// style URL for this table
-         */
-        public static final Uri CONTENT_URI =
-            Uri.parse("content://" + AUTHORITY + "/system");
+/**
+ * The content:// style URL for this table
+ */
+public static final Uri CONTENT_URI =
+    Uri.parse("content://" + AUTHORITY + "/system");
 
-        private static final NameValueCache sNameValueCache = new NameValueCache(
-                SYS_PROP_SETTING_VERSION,
-                CONTENT_URI,
-                CALL_METHOD_GET_SYSTEM,
-                CALL_METHOD_PUT_SYSTEM);
+private static final NameValueCache sNameValueCache = new NameValueCache(
+	SYS_PROP_SETTING_VERSION,
+	CONTENT_URI,
+	CALL_METHOD_GET_SYSTEM,
+	CALL_METHOD_PUT_SYSTEM);
 
-        private static final HashSet<String> MOVED_TO_SECURE;
-        static {
-            MOVED_TO_SECURE = new HashSet<String>(30);
-            MOVED_TO_SECURE.add(Secure.ANDROID_ID);
-            MOVED_TO_SECURE.add(Secure.HTTP_PROXY);
-            MOVED_TO_SECURE.add(Secure.LOCATION_PROVIDERS_ALLOWED);
-            MOVED_TO_SECURE.add(Secure.LOCK_BIOMETRIC_WEAK_FLAGS);
-            MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_ENABLED);
-            MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_VISIBLE);
-            MOVED_TO_SECURE.add(Secure.LOCK_SHOW_ERROR_PATH);
-            MOVED_TO_SECURE.add(Secure.LOCK_DOTS_VISIBLE);
-            MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED);
-            MOVED_TO_SECURE.add(Secure.LOGGING_ID);
-            MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_ENABLED);
-            MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_LAST_UPDATE);
-            MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_REDIRECT_URL);
-            MOVED_TO_SECURE.add(Secure.SETTINGS_CLASSNAME);
-            MOVED_TO_SECURE.add(Secure.USE_GOOGLE_MAIL);
-            MOVED_TO_SECURE.add(Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON);
-            MOVED_TO_SECURE.add(Secure.WIFI_NETWORKS_AVAILABLE_REPEAT_DELAY);
-            MOVED_TO_SECURE.add(Secure.WIFI_NUM_OPEN_NETWORKS_KEPT);
-            MOVED_TO_SECURE.add(Secure.WIFI_ON);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_ACCEPTABLE_PACKET_LOSS_PERCENTAGE);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_AP_COUNT);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_BACKGROUND_CHECK_DELAY_MS);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_BACKGROUND_CHECK_ENABLED);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_BACKGROUND_CHECK_TIMEOUT_MS);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_INITIAL_IGNORED_PING_COUNT);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_MAX_AP_CHECKS);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_ON);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_PING_COUNT);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_PING_DELAY_MS);
-            MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_PING_TIMEOUT_MS);
-        }
+private static final HashSet<String> MOVED_TO_SECURE;
+static {
+    MOVED_TO_SECURE = new HashSet<String>(30);
+    MOVED_TO_SECURE.add(Secure.ANDROID_ID);
+    MOVED_TO_SECURE.add(Secure.HTTP_PROXY);
+    MOVED_TO_SECURE.add(Secure.LOCATION_PROVIDERS_ALLOWED);
+    MOVED_TO_SECURE.add(Secure.LOCK_BIOMETRIC_WEAK_FLAGS);
+    MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_ENABLED);
+    MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_VISIBLE);
+    MOVED_TO_SECURE.add(Secure.LOCK_SHOW_ERROR_PATH);
+    MOVED_TO_SECURE.add(Secure.LOCK_DOTS_VISIBLE);
+    MOVED_TO_SECURE.add(Secure.LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED);
+    MOVED_TO_SECURE.add(Secure.LOGGING_ID);
+    MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_ENABLED);
+    MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_LAST_UPDATE);
+    MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_REDIRECT_URL);
+    MOVED_TO_SECURE.add(Secure.SETTINGS_CLASSNAME);
+    MOVED_TO_SECURE.add(Secure.USE_GOOGLE_MAIL);
+    MOVED_TO_SECURE.add(Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON);
+    MOVED_TO_SECURE.add(Secure.WIFI_NETWORKS_AVAILABLE_REPEAT_DELAY);
+    MOVED_TO_SECURE.add(Secure.WIFI_NUM_OPEN_NETWORKS_KEPT);
+    MOVED_TO_SECURE.add(Secure.WIFI_ON);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_ACCEPTABLE_PACKET_LOSS_PERCENTAGE);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_AP_COUNT);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_BACKGROUND_CHECK_DELAY_MS);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_BACKGROUND_CHECK_ENABLED);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_BACKGROUND_CHECK_TIMEOUT_MS);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_INITIAL_IGNORED_PING_COUNT);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_MAX_AP_CHECKS);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_ON);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_PING_COUNT);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_PING_DELAY_MS);
+    MOVED_TO_SECURE.add(Secure.WIFI_WATCHDOG_PING_TIMEOUT_MS);
+}
 
-        private static final HashSet<String> MOVED_TO_GLOBAL;
-        private static final HashSet<String> MOVED_TO_SECURE_THEN_GLOBAL;
-        static {
-            MOVED_TO_GLOBAL = new HashSet<String>();
-            MOVED_TO_SECURE_THEN_GLOBAL = new HashSet<String>();
+private static final HashSet<String> MOVED_TO_GLOBAL;
+private static final HashSet<String> MOVED_TO_SECURE_THEN_GLOBAL;
+static {
+    MOVED_TO_GLOBAL = new HashSet<String>();
+    MOVED_TO_SECURE_THEN_GLOBAL = new HashSet<String>();
 
-            // these were originally in system but migrated to secure in the past,
-            // so are duplicated in the Secure.* namespace
-            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.ADB_ENABLED);
-            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.BLUETOOTH_ON);
-            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.DATA_ROAMING);
-            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.DEVICE_PROVISIONED);
-            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.INSTALL_NON_MARKET_APPS);
-            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.USB_MASS_STORAGE_ENABLED);
-            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.HTTP_PROXY);
+    // these were originally in system but migrated to secure in the past,
+    // so are duplicated in the Secure.* namespace
+    MOVED_TO_SECURE_THEN_GLOBAL.add(Global.ADB_ENABLED);
+    MOVED_TO_SECURE_THEN_GLOBAL.add(Global.BLUETOOTH_ON);
+    MOVED_TO_SECURE_THEN_GLOBAL.add(Global.DATA_ROAMING);
+    MOVED_TO_SECURE_THEN_GLOBAL.add(Global.DEVICE_PROVISIONED);
+    MOVED_TO_SECURE_THEN_GLOBAL.add(Global.INSTALL_NON_MARKET_APPS);
+    MOVED_TO_SECURE_THEN_GLOBAL.add(Global.USB_MASS_STORAGE_ENABLED);
+    MOVED_TO_SECURE_THEN_GLOBAL.add(Global.HTTP_PROXY);
 
-            // these are moving directly from system to global
-            MOVED_TO_GLOBAL.add(Settings.Global.AIRPLANE_MODE_ON);
-            MOVED_TO_GLOBAL.add(Settings.Global.AIRPLANE_MODE_RADIOS);
-            MOVED_TO_GLOBAL.add(Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
-            MOVED_TO_GLOBAL.add(Settings.Global.AUTO_TIME);
-            MOVED_TO_GLOBAL.add(Settings.Global.AUTO_TIME_ZONE);
-            MOVED_TO_GLOBAL.add(Settings.Global.CAR_DOCK_SOUND);
-            MOVED_TO_GLOBAL.add(Settings.Global.CAR_UNDOCK_SOUND);
-            MOVED_TO_GLOBAL.add(Settings.Global.DESK_DOCK_SOUND);
-            MOVED_TO_GLOBAL.add(Settings.Global.DESK_UNDOCK_SOUND);
-            MOVED_TO_GLOBAL.add(Settings.Global.DOCK_SOUNDS_ENABLED);
-            MOVED_TO_GLOBAL.add(Settings.Global.LOCK_SOUND);
-            MOVED_TO_GLOBAL.add(Settings.Global.UNLOCK_SOUND);
-            MOVED_TO_GLOBAL.add(Settings.Global.LOW_BATTERY_SOUND);
-            MOVED_TO_GLOBAL.add(Settings.Global.POWER_SOUNDS_ENABLED);
-            MOVED_TO_GLOBAL.add(Settings.Global.STAY_ON_WHILE_PLUGGED_IN);
-            MOVED_TO_GLOBAL.add(Settings.Global.WIFI_SLEEP_POLICY);
-            MOVED_TO_GLOBAL.add(Settings.Global.MODE_RINGER);
-            MOVED_TO_GLOBAL.add(Settings.Global.WINDOW_ANIMATION_SCALE);
-            MOVED_TO_GLOBAL.add(Settings.Global.TRANSITION_ANIMATION_SCALE);
-            MOVED_TO_GLOBAL.add(Settings.Global.ANIMATOR_DURATION_SCALE);
-            MOVED_TO_GLOBAL.add(Settings.Global.FANCY_IME_ANIMATIONS);
-            MOVED_TO_GLOBAL.add(Settings.Global.COMPATIBILITY_MODE);
-            MOVED_TO_GLOBAL.add(Settings.Global.EMERGENCY_TONE);
-            MOVED_TO_GLOBAL.add(Settings.Global.CALL_AUTO_RETRY);
-            MOVED_TO_GLOBAL.add(Settings.Global.DEBUG_APP);
-            MOVED_TO_GLOBAL.add(Settings.Global.WAIT_FOR_DEBUGGER);
-            MOVED_TO_GLOBAL.add(Settings.Global.SHOW_PROCESSES);
-            MOVED_TO_GLOBAL.add(Settings.Global.ALWAYS_FINISH_ACTIVITIES);
-        }
+    // these are moving directly from system to global
+    MOVED_TO_GLOBAL.add(Settings.Global.AIRPLANE_MODE_ON);
+    MOVED_TO_GLOBAL.add(Settings.Global.AIRPLANE_MODE_RADIOS);
+    MOVED_TO_GLOBAL.add(Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
+    MOVED_TO_GLOBAL.add(Settings.Global.AUTO_TIME);
+    MOVED_TO_GLOBAL.add(Settings.Global.AUTO_TIME_ZONE);
+    MOVED_TO_GLOBAL.add(Settings.Global.CAR_DOCK_SOUND);
+    MOVED_TO_GLOBAL.add(Settings.Global.CAR_UNDOCK_SOUND);
+    MOVED_TO_GLOBAL.add(Settings.Global.DESK_DOCK_SOUND);
+    MOVED_TO_GLOBAL.add(Settings.Global.DESK_UNDOCK_SOUND);
+    MOVED_TO_GLOBAL.add(Settings.Global.DOCK_SOUNDS_ENABLED);
+    MOVED_TO_GLOBAL.add(Settings.Global.LOCK_SOUND);
+    MOVED_TO_GLOBAL.add(Settings.Global.UNLOCK_SOUND);
+    MOVED_TO_GLOBAL.add(Settings.Global.LOW_BATTERY_SOUND);
+    MOVED_TO_GLOBAL.add(Settings.Global.POWER_SOUNDS_ENABLED);
+    MOVED_TO_GLOBAL.add(Settings.Global.STAY_ON_WHILE_PLUGGED_IN);
+    MOVED_TO_GLOBAL.add(Settings.Global.WIFI_SLEEP_POLICY);
+    MOVED_TO_GLOBAL.add(Settings.Global.MODE_RINGER);
+    MOVED_TO_GLOBAL.add(Settings.Global.WINDOW_ANIMATION_SCALE);
+    MOVED_TO_GLOBAL.add(Settings.Global.TRANSITION_ANIMATION_SCALE);
+    MOVED_TO_GLOBAL.add(Settings.Global.ANIMATOR_DURATION_SCALE);
+    MOVED_TO_GLOBAL.add(Settings.Global.FANCY_IME_ANIMATIONS);
+    MOVED_TO_GLOBAL.add(Settings.Global.COMPATIBILITY_MODE);
+    MOVED_TO_GLOBAL.add(Settings.Global.EMERGENCY_TONE);
+    MOVED_TO_GLOBAL.add(Settings.Global.CALL_AUTO_RETRY);
+    MOVED_TO_GLOBAL.add(Settings.Global.DEBUG_APP);
+    MOVED_TO_GLOBAL.add(Settings.Global.WAIT_FOR_DEBUGGER);
+    MOVED_TO_GLOBAL.add(Settings.Global.SHOW_PROCESSES);
+    MOVED_TO_GLOBAL.add(Settings.Global.ALWAYS_FINISH_ACTIVITIES);
+}
 
-        /** @hide */
-        public static void getMovedKeys(HashSet<String> outKeySet) {
-            outKeySet.addAll(MOVED_TO_GLOBAL);
-            outKeySet.addAll(MOVED_TO_SECURE_THEN_GLOBAL);
-        }
+/** @hide */
+public static void getMovedKeys(HashSet<String> outKeySet) {
+    outKeySet.addAll(MOVED_TO_GLOBAL);
+    outKeySet.addAll(MOVED_TO_SECURE_THEN_GLOBAL);
+}
 
-        /** @hide */
-        public static void getNonLegacyMovedKeys(HashSet<String> outKeySet) {
-            outKeySet.addAll(MOVED_TO_GLOBAL);
-        }
+/** @hide */
+public static void getNonLegacyMovedKeys(HashSet<String> outKeySet) {
+    outKeySet.addAll(MOVED_TO_GLOBAL);
+}
 
-        /**
-         * Look up a name in the database.
-         * @param resolver to access the database with
-         * @param name to look up in the table
-         * @return the corresponding value, or null if not present
-         */
-        public static String getString(ContentResolver resolver, String name) {
-            return getStringForUser(resolver, name, UserHandle.myUserId());
-        }
+/**
+ * Look up a name in the database.
+ * @param resolver to access the database with
+ * @param name to look up in the table
+ * @return the corresponding value, or null if not present
+ */
+public static String getString(ContentResolver resolver, String name) {
+    return getStringForUser(resolver, name, UserHandle.myUserId());
+}
 
-        /** @hide */
-        public static String getStringForUser(ContentResolver resolver, String name,
-                int userHandle) {
-            if (MOVED_TO_SECURE.contains(name)) {
-                Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
-                        + " to android.provider.Settings.Secure, returning read-only value.");
-                return Secure.getStringForUser(resolver, name, userHandle);
-            }
-            if (MOVED_TO_GLOBAL.contains(name) || MOVED_TO_SECURE_THEN_GLOBAL.contains(name)) {
-                Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
-                        + " to android.provider.Settings.Global, returning read-only value.");
-                return Global.getStringForUser(resolver, name, userHandle);
-            }
-            return sNameValueCache.getStringForUser(resolver, name, userHandle);
-        }
+/** @hide */
+public static String getStringForUser(ContentResolver resolver, String name,
+	int userHandle) {
+    if (MOVED_TO_SECURE.contains(name)) {
+	Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
+		+ " to android.provider.Settings.Secure, returning read-only value.");
+	return Secure.getStringForUser(resolver, name, userHandle);
+    }
+    if (MOVED_TO_GLOBAL.contains(name) || MOVED_TO_SECURE_THEN_GLOBAL.contains(name)) {
+	Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
+		+ " to android.provider.Settings.Global, returning read-only value.");
+	return Global.getStringForUser(resolver, name, userHandle);
+    }
+    return sNameValueCache.getStringForUser(resolver, name, userHandle);
+}
 
-        /**
-         * Store a name/value pair into the database.
-         * @param resolver to access the database with
-         * @param name to store
-         * @param value to associate with the name
-         * @return true if the value was set, false on database errors
-         */
-        public static boolean putString(ContentResolver resolver, String name, String value) {
-            return putStringForUser(resolver, name, value, UserHandle.myUserId());
-        }
+/**
+ * Store a name/value pair into the database.
+ * @param resolver to access the database with
+ * @param name to store
+ * @param value to associate with the name
+ * @return true if the value was set, false on database errors
+ */
+public static boolean putString(ContentResolver resolver, String name, String value) {
+    return putStringForUser(resolver, name, value, UserHandle.myUserId());
+}
 
-        /** @hide */
-        public static boolean putStringForUser(ContentResolver resolver, String name, String value,
-                int userHandle) {
-            if (MOVED_TO_SECURE.contains(name)) {
-                Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
-                        + " to android.provider.Settings.Secure, value is unchanged.");
-                return false;
-            }
-            if (MOVED_TO_GLOBAL.contains(name) || MOVED_TO_SECURE_THEN_GLOBAL.contains(name)) {
-                Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
-                        + " to android.provider.Settings.Global, value is unchanged.");
-                return false;
-            }
-            return sNameValueCache.putStringForUser(resolver, name, value, userHandle);
-        }
+/** @hide */
+public static boolean putStringForUser(ContentResolver resolver, String name, String value,
+	int userHandle) {
+    if (MOVED_TO_SECURE.contains(name)) {
+	Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
+		+ " to android.provider.Settings.Secure, value is unchanged.");
+	return false;
+    }
+    if (MOVED_TO_GLOBAL.contains(name) || MOVED_TO_SECURE_THEN_GLOBAL.contains(name)) {
+	Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
+		+ " to android.provider.Settings.Global, value is unchanged.");
+	return false;
+    }
+    return sNameValueCache.putStringForUser(resolver, name, value, userHandle);
+}
 
-        /**
-         * Construct the content URI for a particular name/value pair,
-         * useful for monitoring changes with a ContentObserver.
-         * @param name to look up in the table
-         * @return the corresponding content URI, or null if not present
-         */
-        public static Uri getUriFor(String name) {
-            if (MOVED_TO_SECURE.contains(name)) {
-                Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
-                    + " to android.provider.Settings.Secure, returning Secure URI.");
-                return Secure.getUriFor(Secure.CONTENT_URI, name);
-            }
-            if (MOVED_TO_GLOBAL.contains(name) || MOVED_TO_SECURE_THEN_GLOBAL.contains(name)) {
-                Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
-                        + " to android.provider.Settings.Global, returning read-only global URI.");
-                return Global.getUriFor(Global.CONTENT_URI, name);
-            }
-            return getUriFor(CONTENT_URI, name);
-        }
+/**
+ * Construct the content URI for a particular name/value pair,
+ * useful for monitoring changes with a ContentObserver.
+ * @param name to look up in the table
+ * @return the corresponding content URI, or null if not present
+ */
+public static Uri getUriFor(String name) {
+    if (MOVED_TO_SECURE.contains(name)) {
+	Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
+	    + " to android.provider.Settings.Secure, returning Secure URI.");
+	return Secure.getUriFor(Secure.CONTENT_URI, name);
+    }
+    if (MOVED_TO_GLOBAL.contains(name) || MOVED_TO_SECURE_THEN_GLOBAL.contains(name)) {
+	Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
+		+ " to android.provider.Settings.Global, returning read-only global URI.");
+	return Global.getUriFor(Global.CONTENT_URI, name);
+    }
+    return getUriFor(CONTENT_URI, name);
+}
 
-        /**
-         * Convenience function for retrieving a single system settings value
-         * as an integer.  Note that internally setting values are always
-         * stored as strings; this function converts the string to an integer
-         * for you.  The default value will be returned if the setting is
-         * not defined or not an integer.
-         *
-         * @param cr The ContentResolver to access.
-         * @param name The name of the setting to retrieve.
-         * @param def Value to return if the setting is not defined.
-         *
-         * @return The setting's current value, or 'def' if it is not defined
-         * or not a valid integer.
-         */
-        public static int getInt(ContentResolver cr, String name, int def) {
-            return getIntForUser(cr, name, def, UserHandle.myUserId());
-        }
+/**
+ * Convenience function for retrieving a single system settings value
+ * as an integer.  Note that internally setting values are always
+ * stored as strings; this function converts the string to an integer
+ * for you.  The default value will be returned if the setting is
+ * not defined or not an integer.
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to retrieve.
+ * @param def Value to return if the setting is not defined.
+ *
+ * @return The setting's current value, or 'def' if it is not defined
+ * or not a valid integer.
+ */
+public static int getInt(ContentResolver cr, String name, int def) {
+    return getIntForUser(cr, name, def, UserHandle.myUserId());
+}
 
-        /** @hide */
-        public static int getIntForUser(ContentResolver cr, String name, int def, int userHandle) {
-            String v = getStringForUser(cr, name, userHandle);
-            try {
-                return v != null ? Integer.parseInt(v) : def;
-            } catch (NumberFormatException e) {
-                return def;
-            }
-        }
+/** @hide */
+public static int getIntForUser(ContentResolver cr, String name, int def, int userHandle) {
+    String v = getStringForUser(cr, name, userHandle);
+    try {
+	return v != null ? Integer.parseInt(v) : def;
+    } catch (NumberFormatException e) {
+	return def;
+    }
+}
 
-        /**
-         * Convenience function for retrieving a single system settings value
-         * as an integer.  Note that internally setting values are always
-         * stored as strings; this function converts the string to an integer
-         * for you.
-         * <p>
-         * This version does not take a default value.  If the setting has not
-         * been set, or the string value is not a number,
-         * it throws {@link SettingNotFoundException}.
-         *
-         * @param cr The ContentResolver to access.
-         * @param name The name of the setting to retrieve.
-         *
-         * @throws SettingNotFoundException Thrown if a setting by the given
-         * name can't be found or the setting value is not an integer.
-         *
-         * @return The setting's current value.
-         */
-        public static int getInt(ContentResolver cr, String name)
-                throws SettingNotFoundException {
-            return getIntForUser(cr, name, UserHandle.myUserId());
-        }
+/**
+ * Convenience function for retrieving a single system settings value
+ * as an integer.  Note that internally setting values are always
+ * stored as strings; this function converts the string to an integer
+ * for you.
+ * <p>
+ * This version does not take a default value.  If the setting has not
+ * been set, or the string value is not a number,
+ * it throws {@link SettingNotFoundException}.
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to retrieve.
+ *
+ * @throws SettingNotFoundException Thrown if a setting by the given
+ * name can't be found or the setting value is not an integer.
+ *
+ * @return The setting's current value.
+ */
+public static int getInt(ContentResolver cr, String name)
+	throws SettingNotFoundException {
+    return getIntForUser(cr, name, UserHandle.myUserId());
+}
 
-        /** @hide */
-        public static int getIntForUser(ContentResolver cr, String name, int userHandle)
-                throws SettingNotFoundException {
-            String v = getStringForUser(cr, name, userHandle);
-            try {
-                return Integer.parseInt(v);
-            } catch (NumberFormatException e) {
-                throw new SettingNotFoundException(name);
-            }
-        }
+/** @hide */
+public static int getIntForUser(ContentResolver cr, String name, int userHandle)
+	throws SettingNotFoundException {
+    String v = getStringForUser(cr, name, userHandle);
+    try {
+	return Integer.parseInt(v);
+    } catch (NumberFormatException e) {
+	throw new SettingNotFoundException(name);
+    }
+}
 
-        /**
-         * Convenience function for updating a single settings value as an
-         * integer. This will either create a new entry in the table if the
-         * given name does not exist, or modify the value of the existing row
-         * with that name.  Note that internally setting values are always
-         * stored as strings, so this function converts the given value to a
-         * string before storing it.
-         *
-         * @param cr The ContentResolver to access.
-         * @param name The name of the setting to modify.
-         * @param value The new value for the setting.
-         * @return true if the value was set, false on database errors
-         */
-        public static boolean putInt(ContentResolver cr, String name, int value) {
-            return putIntForUser(cr, name, value, UserHandle.myUserId());
-        }
+/**
+ * Convenience function for updating a single settings value as an
+ * integer. This will either create a new entry in the table if the
+ * given name does not exist, or modify the value of the existing row
+ * with that name.  Note that internally setting values are always
+ * stored as strings, so this function converts the given value to a
+ * string before storing it.
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to modify.
+ * @param value The new value for the setting.
+ * @return true if the value was set, false on database errors
+ */
+public static boolean putInt(ContentResolver cr, String name, int value) {
+    return putIntForUser(cr, name, value, UserHandle.myUserId());
+}
 
-        /** @hide */
-        public static boolean putIntForUser(ContentResolver cr, String name, int value,
-                int userHandle) {
-            return putStringForUser(cr, name, Integer.toString(value), userHandle);
-        }
+/** @hide */
+public static boolean putIntForUser(ContentResolver cr, String name, int value,
+	int userHandle) {
+    return putStringForUser(cr, name, Integer.toString(value), userHandle);
+}
 
-        /**
-         * Convenience function for retrieving a single system settings value
-         * as a {@code long}.  Note that internally setting values are always
-         * stored as strings; this function converts the string to a {@code long}
-         * for you.  The default value will be returned if the setting is
-         * not defined or not a {@code long}.
-         *
-         * @param cr The ContentResolver to access.
-         * @param name The name of the setting to retrieve.
-         * @param def Value to return if the setting is not defined.
-         *
-         * @return The setting's current value, or 'def' if it is not defined
-         * or not a valid {@code long}.
-         */
-        public static long getLong(ContentResolver cr, String name, long def) {
-            return getLongForUser(cr, name, def, UserHandle.myUserId());
-        }
+/**
+ * @hide
+ * Convenience function for updating a single settings value as a
+ * boolean. This will either create a new entry in the table if the
+ * given name does not exist, or modify the value of the existing row
+ * with that name.  Note that internally setting values are always
+ * stored as strings, so this function converts the given value to a
+ * string (1 or 0) before storing it.
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to modify.
+ * @param value The new value for the setting.
+ * @return true if the value was set, false on database errors
+ */
+public static boolean putBoolean(ContentResolver cr, String name, boolean value) {
+    return putString(cr, name, value ? "1" : "0");
+}
 
-        /** @hide */
-        public static long getLongForUser(ContentResolver cr, String name, long def,
-                int userHandle) {
-            String valString = getStringForUser(cr, name, userHandle);
-            long value;
-            try {
-                value = valString != null ? Long.parseLong(valString) : def;
-            } catch (NumberFormatException e) {
-                value = def;
-            }
-            return value;
-        }
+/**
+ * @hide
+ * Convenience function for retrieving a single system settings value
+ * as a boolean.  Note that internally setting values are always
+ * stored as strings; this function converts the string to a boolean
+ * for you. It will only return true if the stored value is "1"
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to retrieve.
+ * @param def Value to return if the setting is not defined.
+ *
+ * @return The setting's current value, or 'def' if it is not defined
+ * or not a valid integer.
+ */
+public static boolean getBoolean(ContentResolver cr, String name, boolean def) {
+    String v = getString(cr, name);
+    try {
+	if(v != null)
+	    return "1".equals(v);
+	else
+	    return def;
+    } catch (NumberFormatException e) {
+	return def;
+    }
+}
 
-        /**
-         * Convenience function for retrieving a single system settings value
-         * as a {@code long}.  Note that internally setting values are always
-         * stored as strings; this function converts the string to a {@code long}
-         * for you.
-         * <p>
-         * This version does not take a default value.  If the setting has not
-         * been set, or the string value is not a number,
-         * it throws {@link SettingNotFoundException}.
-         *
-         * @param cr The ContentResolver to access.
-         * @param name The name of the setting to retrieve.
-         *
-         * @return The setting's current value.
-         * @throws SettingNotFoundException Thrown if a setting by the given
-         * name can't be found or the setting value is not an integer.
-         */
-        public static long getLong(ContentResolver cr, String name)
-                throws SettingNotFoundException {
-            return getLongForUser(cr, name, UserHandle.myUserId());
-        }
+/**
+ * Convenience function for retrieving a single system settings value
+ * as a {@code long}.  Note that internally setting values are always
+ * stored as strings; this function converts the string to a {@code long}
+ * for you.  The default value will be returned if the setting is
+ * not defined or not a {@code long}.
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to retrieve.
+ * @param def Value to return if the setting is not defined.
+ *
+ * @return The setting's current value, or 'def' if it is not defined
+ * or not a valid {@code long}.
+ */
+public static long getLong(ContentResolver cr, String name, long def) {
+    return getLongForUser(cr, name, def, UserHandle.myUserId());
+}
 
-        /** @hide */
-        public static long getLongForUser(ContentResolver cr, String name, int userHandle)
-                throws SettingNotFoundException {
-            String valString = getStringForUser(cr, name, userHandle);
-            try {
-                return Long.parseLong(valString);
-            } catch (NumberFormatException e) {
-                throw new SettingNotFoundException(name);
-            }
-        }
+/** @hide */
+public static long getLongForUser(ContentResolver cr, String name, long def,
+	int userHandle) {
+    String valString = getStringForUser(cr, name, userHandle);
+    long value;
+    try {
+	value = valString != null ? Long.parseLong(valString) : def;
+    } catch (NumberFormatException e) {
+	value = def;
+    }
+    return value;
+}
 
-        /**
-         * Convenience function for updating a single settings value as a long
-         * integer. This will either create a new entry in the table if the
-         * given name does not exist, or modify the value of the existing row
-         * with that name.  Note that internally setting values are always
-         * stored as strings, so this function converts the given value to a
-         * string before storing it.
-         *
-         * @param cr The ContentResolver to access.
-         * @param name The name of the setting to modify.
-         * @param value The new value for the setting.
-         * @return true if the value was set, false on database errors
-         */
-        public static boolean putLong(ContentResolver cr, String name, long value) {
-            return putLongForUser(cr, name, value, UserHandle.myUserId());
-        }
+/**
+ * Convenience function for retrieving a single system settings value
+ * as a {@code long}.  Note that internally setting values are always
+ * stored as strings; this function converts the string to a {@code long}
+ * for you.
+ * <p>
+ * This version does not take a default value.  If the setting has not
+ * been set, or the string value is not a number,
+ * it throws {@link SettingNotFoundException}.
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to retrieve.
+ *
+ * @return The setting's current value.
+ * @throws SettingNotFoundException Thrown if a setting by the given
+ * name can't be found or the setting value is not an integer.
+ */
+public static long getLong(ContentResolver cr, String name)
+	throws SettingNotFoundException {
+    return getLongForUser(cr, name, UserHandle.myUserId());
+}
 
-        /** @hide */
-        public static boolean putLongForUser(ContentResolver cr, String name, long value,
-                int userHandle) {
-            return putStringForUser(cr, name, Long.toString(value), userHandle);
-        }
+/** @hide */
+public static long getLongForUser(ContentResolver cr, String name, int userHandle)
+	throws SettingNotFoundException {
+    String valString = getStringForUser(cr, name, userHandle);
+    try {
+	return Long.parseLong(valString);
+    } catch (NumberFormatException e) {
+	throw new SettingNotFoundException(name);
+    }
+}
 
-        /**
-         * Convenience function for retrieving a single system settings value
-         * as a floating point number.  Note that internally setting values are
-         * always stored as strings; this function converts the string to an
-         * float for you. The default value will be returned if the setting
-         * is not defined or not a valid float.
-         *
-         * @param cr The ContentResolver to access.
-         * @param name The name of the setting to retrieve.
-         * @param def Value to return if the setting is not defined.
-         *
-         * @return The setting's current value, or 'def' if it is not defined
-         * or not a valid float.
-         */
-        public static float getFloat(ContentResolver cr, String name, float def) {
-            return getFloatForUser(cr, name, def, UserHandle.myUserId());
-        }
+/**
+ * Convenience function for updating a single settings value as a long
+ * integer. This will either create a new entry in the table if the
+ * given name does not exist, or modify the value of the existing row
+ * with that name.  Note that internally setting values are always
+ * stored as strings, so this function converts the given value to a
+ * string before storing it.
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to modify.
+ * @param value The new value for the setting.
+ * @return true if the value was set, false on database errors
+ */
+public static boolean putLong(ContentResolver cr, String name, long value) {
+    return putLongForUser(cr, name, value, UserHandle.myUserId());
+}
 
-        /** @hide */
-        public static float getFloatForUser(ContentResolver cr, String name, float def,
-                int userHandle) {
-            String v = getStringForUser(cr, name, userHandle);
+/** @hide */
+public static boolean putLongForUser(ContentResolver cr, String name, long value,
+	int userHandle) {
+    return putStringForUser(cr, name, Long.toString(value), userHandle);
+}
+
+/**
+ * Convenience function for retrieving a single system settings value
+ * as a floating point number.  Note that internally setting values are
+ * always stored as strings; this function converts the string to an
+ * float for you. The default value will be returned if the setting
+ * is not defined or not a valid float.
+ *
+ * @param cr The ContentResolver to access.
+ * @param name The name of the setting to retrieve.
+ * @param def Value to return if the setting is not defined.
+ *
+ * @return The setting's current value, or 'def' if it is not defined
+ * or not a valid float.
+ */
+public static float getFloat(ContentResolver cr, String name, float def) {
+    return getFloatForUser(cr, name, def, UserHandle.myUserId());
+}
+
+/** @hide */
+public static float getFloatForUser(ContentResolver cr, String name, float def,
+	int userHandle) {
+    String v = getStringForUser(cr, name, userHandle);
             try {
                 return v != null ? Float.parseFloat(v) : def;
             } catch (NumberFormatException e) {
@@ -2977,6 +3021,13 @@ public final class Settings {
           * @hide
           */
          public static final String KEY_ASSIST_ACTION = "key_assist_action";
+        /**
+         * whether to hide the Ram Usage Bar on recent switcher
+         *
+         * @hide
+         */
+        public static final String RAM_USAGE_BAR = "ram_usage_bar";
+
 
         /**
          * Weather to minimize lockscreen challenge on screen turned on
